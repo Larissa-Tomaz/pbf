@@ -1,0 +1,53 @@
+syntax = "proto3";
+package pbfProto;
+
+import "auth.proto";
+
+enum Species {
+    CATTLE = 0;
+    GOAT = 1;
+    PIG = 2;
+}
+
+message HealthRecord {
+    string vaccine = 1;
+    string dateAdministered = 2; 
+}
+
+message FeedingData {
+    string type = 1; 
+    bool hormoneFree = 2;
+}
+
+message Certification {
+    string type = 1; 
+    string dateIssued = 2; 
+}
+
+message LivestockData {
+    string livestockId = 1; 
+    Species species = 2;
+    string breed = 3; 
+    string birthDate = 4; 
+    repeated HealthRecord healthRecords = 5;
+    FeedingData feedingData = 6;
+    repeated Certification certifications = 7;
+}
+
+message ShareLivestockDataRequest {
+    string token = 1; 
+    repeated LivestockData livestock = 2; 
+}
+
+message ShareLivestockDataResponse {
+    ErrorMessage errorMessage = 1;
+}
+
+message GetLivestockDataRequest {
+    string token = 1; 
+}
+
+message GetLivestockDataResponse {
+    ErrorMessage errorMessage = 1;
+    repeated LivestockData livestock = 2;
+}

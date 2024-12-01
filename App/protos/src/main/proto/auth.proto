@@ -1,0 +1,133 @@
+syntax = "proto3";
+package pbfProto;
+
+// User
+enum ROLE {
+    PRODUCER = 0;
+    SUPERMARKET = 1;
+    REGULATORY_AUTHORITY = 2;
+}
+
+message ErrorMessage {
+    string description = 1;
+}
+
+message UserRegistrationRequest {
+    string username = 1;
+    string name = 2;
+    string password = 3;
+    ROLE role = 4;
+}
+
+message UserRegistrationResponse {
+    ErrorMessage errorMessage = 1;
+    User user = 2;
+}
+
+message User {
+    string username = 1;
+    string name = 2;
+    ROLE role = 3;
+    string userId = 4;
+    repeated int32 channelIds = 5;
+}
+
+message UserAuthenticationRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message UserAuthenticationResponse {
+    string token = 1;
+    User user = 2;
+    ErrorMessage errorMessage = 3;
+}
+
+message UserAuthorizationRequest {
+    string token = 1;
+}
+
+message UserAuthorizationResponse {
+    ROLE role = 1;
+    ErrorMessage errorMessage = 2;
+}
+
+message UserLogoutRequest {
+    string token = 1;
+}
+
+message UserLogoutResponse {
+    ErrorMessage errorMessage = 1;
+}
+
+message UserDeleteRequest {
+    string token = 1;
+}
+
+message UserDeleteResponse {
+    ErrorMessage errorMessage = 1;
+}
+
+message JoinChannelRequest {
+    string token = 1;
+    string channelName = 2;
+}
+
+message JoinChannelResponse {
+    RequestStatus requestStatus = 1;
+    ErrorMessage errorMessage = 2;
+}
+
+message RequestStatus {
+    string channelName = 1;
+    string requester = 2;
+    string channel_admin = 3;
+    string status = 4;
+    string requestId = 5;
+}
+
+message ChannelInfo {
+    string name = 1;
+    string channelId = 2;
+    repeated string members = 3;
+}
+
+message CreateChannelRequest {
+    string token = 1;
+    string channel_name = 2;
+    repeated string members = 3;
+}
+
+message CreateChannelResponse {
+    ChannelInfo channelInfo = 1;
+    ErrorMessage errorMessage = 2;
+}
+
+message ListRequentsRequest {
+    string token = 1;
+}
+
+message ListRequestsResponse {
+    repeated RequestStatus requestStatus = 1;
+    ErrorMessage errorMessage = 2;
+}
+
+message ListChannelsRequest {
+    string token = 1;
+}
+
+message ListChannelsResponse {
+    repeated ChannelInfo channelInfo = 1;
+    ErrorMessage errorMessage = 2;
+}
+
+message ResolveRequestRequest {
+    string requestId = 1;
+    bool approve = 2;
+}
+
+message ResolveRequestResponse {
+    RequestStatus requestStatus = 1;
+    ErrorMessage errorMessage = 2;
+}
+

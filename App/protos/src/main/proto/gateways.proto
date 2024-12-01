@@ -1,0 +1,25 @@
+syntax = "proto3";
+package pbfProto;
+
+import "auth.proto";
+import "data.proto";
+
+service Gateways {
+    // Registry 
+    rpc RegisterUser(pbfProto.UserRegistrationRequest) returns (pbfProto.UserRegistrationResponse);
+    rpc AuthenticateUser(pbfProto.UserAuthenticationRequest) returns (pbfProto.UserAuthenticationResponse);
+    rpc AuthorizeUser(pbfProto.UserAuthorizationRequest) returns (pbfProto.UserAuthorizationResponse);
+    rpc LogoutUser(pbfProto.UserLogoutRequest) returns (pbfProto.UserLogoutResponse);
+    rpc DeleteUser(pbfProto.UserDeleteRequest) returns (pbfProto.UserDeleteResponse);
+
+    // Channel 
+    rpc CreateChannel(pbfProto.CreateChannelRequest) returns (pbfProto.CreateChannelResponse);
+    rpc ListChannels(pbfProto.ListChannelsRequest) returns (pbfProto.ListChannelsResponse);
+    rpc JoinChannel(pbfProto.JoinChannelRequest) returns (pbfProto.JoinChannelResponse);
+    rpc ListRequests(pbfProto.ListRequentsRequest) returns (pbfProto.ListRequestsResponse);
+    rpc ResolveRequest(pbfProto.ResolveRequestRequest) returns (pbfProto.ResolveRequestResponse);
+
+    // Livestock Data 
+    rpc ShareLivestockData(ShareLivestockDataRequest) returns (ShareLivestockDataResponse);
+    rpc GetLivestockData(GetLivestockDataRequest) returns (GetLivestockDataResponse);
+}
