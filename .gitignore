@@ -16,3 +16,5 @@ build/reports/
 *.project
 gradle/wrapper/gradle-wrapper.properties
 gradle/wrapper/gradle-wrapper.jar
+App/registry/wallet/
+fabric-samples/
