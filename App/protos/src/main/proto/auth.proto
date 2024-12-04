@@ -29,7 +29,8 @@ message User {
     string name = 2;
     ROLE role = 3;
     string userId = 4;
-    repeated int32 channelIds = 5;
+    repeated ChannelInfo channels = 5;
+    string registrationDate = 6;
 }
 
 message UserAuthenticationRequest {
@@ -89,13 +90,12 @@ message RequestStatus {
 message ChannelInfo {
     string name = 1;
     string channelId = 2;
-    repeated string members = 3;
+    repeated User members = 3;
 }
 
 message CreateChannelRequest {
     string token = 1;
     string channel_name = 2;
-    repeated string members = 3;
 }
 
 message CreateChannelResponse {
