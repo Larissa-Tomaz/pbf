@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':protos')
+    implementation 'io.grpc:grpc-netty:1.41.0'
+    implementation 'io.grpc:grpc-protobuf:1.41.0'
+    implementation 'io.grpc:grpc-stub:1.41.0'
+    implementation 'com.google.protobuf:protobuf-java:3.15.8'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+application {
+    mainClass = 'ClientApp'
+    applicationDefaultJvmArgs = ["-Dhost=localhost", "-Dport=8081"]
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': application.mainClass  
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.withType(JavaExec) {
+    args = ['localhost', '8081']
+}
+
+tasks.named('jar') {
+    dependsOn(':protos:jar') 
+}
+
+run {
+    standardInput = System.in
+}
